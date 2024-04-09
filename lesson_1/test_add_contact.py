@@ -11,10 +11,8 @@ class TestAddContact(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    
     def test_add_contact(self):
         wd = self.wd
-
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_page_to_add_account(wd)
@@ -24,10 +22,8 @@ class TestAddContact(unittest.TestCase):
         self.return_to_home_page(wd)
         self.logout(wd)
 
-
     def test_add_empty_contact(self):
         wd = self.wd
-
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_page_to_add_account(wd)
