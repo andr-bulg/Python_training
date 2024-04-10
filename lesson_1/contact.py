@@ -4,7 +4,7 @@
 достаточно было передать ссылку на объект класса (параметр self).
 """
 
-class Account:
+class Contact:
 
     def __init__(self, first_name, last_name, address, mobile_phone, email, day, month, year):
         self.first_name = first_name
