@@ -11,12 +11,9 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
-    def create(self, group_obj):
+    def data_form_completion(self, group_obj):
+        # Заполняем/модифицируем форму данных для создаваемой группы
         wd = self.app.wd
-        self.open_groups_page()
-        # Начинаем создание группы
-        wd.find_element_by_name("new").click()
-        # Заполняем форму данных для создаваемой группы
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys(group_obj.name)
@@ -26,6 +23,14 @@ class GroupHelper:
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
         wd.find_element_by_name("group_footer").send_keys(group_obj.footer)
+
+    def create(self, group_obj):
+        group_obj = group_obj
+        wd = self.app.wd
+        self.open_groups_page()
+        # Начинаем создание группы
+        wd.find_element_by_name("new").click()
+        self.data_form_completion(group_obj)
         # Подтверждаем создание группы
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
@@ -42,20 +47,14 @@ class GroupHelper:
         self.return_to_groups_page()
 
     def modify_first_group(self, group_obj):
+        group_obj = group_obj
         wd = self.app.wd
         self.open_groups_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_name("edit").click()
         # Вносим изменения в форму данных для выбранной группы
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group_obj.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group_obj.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group_obj.footer)
+        self.data_form_completion(group_obj)
         # Подтверждаем изменение группы
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+
