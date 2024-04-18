@@ -4,9 +4,9 @@
 """
 
 from selenium import webdriver
-from lesson_2.fixture.session import SessionHelper
-from lesson_2.fixture.group import GroupHelper
-from lesson_2.fixture.contact import ContactHelper
+from fixture.session import SessionHelper
+from fixture.group import GroupHelper
+from fixture.contact import ContactHelper
 
 class Application:
 

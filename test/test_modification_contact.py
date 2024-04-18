@@ -1,4 +1,4 @@
-from lesson_2.model.contact import Contact
+from model.contact import Contact
 
 def test_modify_first_contact(app):
     """
