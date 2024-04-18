@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 from lesson_2.contact import Contact
-from lesson_2.application_contact import Application_contact
+from lesson_2.application import Application
 
 
 @pytest.fixture
@@ -9,9 +9,9 @@ def app(request):
     """
     Функция, которая создаёт и разрушает фикстуру
     :param request: специальный параметр
-    :return: фикстура (объект класса Application_contact)
+    :return: фикстура (объект класса Application)
     """
-    fixture = Application_contact()
+    fixture = Application()
     request.addfinalizer(fixture.destroy)
     return fixture
 
