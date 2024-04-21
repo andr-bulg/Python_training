@@ -14,18 +14,22 @@ class GroupHelper:
     def data_form_completion(self, group_obj):
         # Заполняем/модифицируем форму данных для создаваемой группы
         wd = self.app.wd
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group_obj.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group_obj.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group_obj.footer)
+        self.change_field_value("group_name", group_obj.name)
+        self.change_field_value("group_header", group_obj.header)
+        self.change_field_value("group_footer", group_obj.footer)
+
+    def change_field_value(self, field_name, text):
+        """
+        :param field_name: название заполняемого поля
+        :param text: текстовое значение, которое будет добавлено в поле
+        """
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def create(self, group_obj):
-        group_obj = group_obj
         wd = self.app.wd
         self.open_groups_page()
         # Начинаем создание группы
@@ -42,19 +46,22 @@ class GroupHelper:
     def delete_first_group(self):
         wd = self.app.wd
         self.open_groups_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_group()
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
 
     def modify_first_group(self, group_obj):
-        group_obj = group_obj
         wd = self.app.wd
         self.open_groups_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_group()
         wd.find_element_by_name("edit").click()
         # Вносим изменения в форму данных для выбранной группы
         self.data_form_completion(group_obj)
         # Подтверждаем изменение группы
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+
+    def select_first_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
 

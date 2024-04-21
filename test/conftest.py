@@ -1,7 +1,7 @@
 import pytest
 from fixture.application import Application
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def app(request):
     """
     Функция, которая создаёт и разрушает фикстуру
