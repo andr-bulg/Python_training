@@ -30,3 +30,10 @@ class Application:
         """
         self.wd.quit()
 
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
+

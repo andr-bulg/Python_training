@@ -1,14 +1,35 @@
 import pytest
 from fixture.application import Application
 
-@pytest.fixture(scope="session")
+fixture = None
+
+@pytest.fixture
 def app(request):
     """
-    Функция, которая создаёт и разрушает фикстуру
+    Функция, которая создаёт фикстуру и выполняет логин
     :param request: специальный параметр
     :return: фикстура (объект класса Application)
     """
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
+    global fixture
+    if fixture is None:
+        fixture = Application()
+        fixture.session.login(username="admin", password="secret")
+    else:
+        if not fixture.is_valid():
+            fixture = Application()
+            fixture.session.login(username="admin", password="secret")
+    return fixture
+
+@pytest.fixture(scope="session", autouse=True)
+def stop(request):
+    """
+    Функция, которая разрушает фикстуру и выполняет логаут
+    :param request: специальный параметр
+    :return: фикстура (объект класса Application)
+    """
+    def fin():
+        fixture.session.logout()
+        fixture.destroy()
+    request.addfinalizer(fin)
     return fixture
 

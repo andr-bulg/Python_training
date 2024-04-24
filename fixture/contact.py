@@ -45,6 +45,7 @@ class ContactHelper:
     def create(self, contact_obj):
         contact_obj = contact_obj
         wd = self.app.wd
+        self.open_home_page()
         self.open_page_to_add_contact()
         # Заполняем форму данных для создаваемого контакта
         self.data_form_completion(contact_obj)
@@ -58,11 +59,13 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
 
     def modify_first_contact(self, contact_obj):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # Вносим изменения в форму данных для выбранного контакта
@@ -70,4 +73,8 @@ class ContactHelper:
         # Подтверждаем изменение контакта
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
+
+    def open_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
 
