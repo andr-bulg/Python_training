@@ -16,31 +16,29 @@ class ContactHelper:
     def data_form_completion(self, contact_obj):
         wd = self.app.wd
         # Заполняем/модифицируем форму данных для создаваемого контакта
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact_obj.first_name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact_obj.last_name)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact_obj.address)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact_obj.mobile_phone)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact_obj.email)
+        self.change_field_value("firstname", contact_obj.first_name)
+        self.change_field_value("lastname", contact_obj.last_name)
+        self.change_field_value("address", contact_obj.address)
+        self.change_field_value("mobile", contact_obj.mobile_phone)
+        self.change_field_value("email", contact_obj.email)
         # Указываем дату рождения при заполнении формы
-        wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text(contact_obj.day)
-        wd.find_element_by_xpath("//option[@value={!r}]".format(contact_obj.day)).click()
-        wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact_obj.month)
-        wd.find_element_by_xpath("//option[@value={!r}]".format(contact_obj.month)).click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys(contact_obj.year)
+        self.change_field_value_date("bday", contact_obj.day, "//option[@value={!r}]")
+        self.change_field_value_date("bmonth", contact_obj.month, "//option[@value={!r}]")
+        self.change_field_value("byear", contact_obj.year)
+
+    def change_field_value_date(self, field_name, text, xpath):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
+            wd.find_element_by_xpath(xpath.format(text)).click()
+
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def create(self, contact_obj):
         contact_obj = contact_obj
@@ -60,13 +58,17 @@ class ContactHelper:
     def delete_first_contact(self):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
 
     def modify_first_contact(self, contact_obj):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # Вносим изменения в форму данных для выбранного контакта
         self.data_form_completion(contact_obj)
