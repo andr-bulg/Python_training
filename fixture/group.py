@@ -9,7 +9,8 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+        if not(wd.current_url.endswith("/groups.php") and len(wd.find_elements_by_name("new")) > 0):
+            wd.find_element_by_link_text("groups").click()
 
     def data_form_completion(self, group_obj):
         # Заполняем/модифицируем форму данных для создаваемой группы
@@ -41,7 +42,8 @@ class GroupHelper:
 
     def return_to_groups_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("group page").click()
+        if not (wd.current_url.endswith("/groups.php") and len(wd.find_elements_by_name("new")) > 0):
+            wd.find_element_by_link_text("group page").click()
 
     def delete_first_group(self):
         wd = self.app.wd

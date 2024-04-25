@@ -53,7 +53,8 @@ class ContactHelper:
 
     def return_to_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        if not (wd.find_elements_by_xpath("//input[@value='Send e-Mail']")):
+            wd.find_element_by_link_text("home page").click()
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -78,7 +79,8 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if not (wd.find_elements_by_xpath("//input[@value='Send e-Mail']")):
+            wd.find_element_by_link_text("home").click()
 
     def count(self):
         wd = self.app.wd
