@@ -3,6 +3,7 @@
 """
 
 from selenium.webdriver.support.ui import Select
+from model.contact import Contact
 
 class ContactHelper:
 
@@ -86,4 +87,20 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        list_of_contacts = []
+        for element in wd.find_elements_by_css_selector("tr[name]"):
+            text = element.text.split()
+            if len(text) == 5:
+                last_name = text[0]
+                first_name = text[1]
+            else:
+                last_name = ''
+                first_name = ''
+            id_contact = element.find_element_by_name("selected[]").get_attribute("value")
+            list_of_contacts.append(Contact(first_name=first_name, last_name=last_name, id_contact=id_contact))
+        return list_of_contacts
 
