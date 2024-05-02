@@ -94,9 +94,13 @@ def test_modify_first_contact(app):
                                     mobile_phone="+79161234565", email="ivanova@test.ru",
                                     day="22", month="July", year="2005"))
     old_contacts = app.contact.get_contact_list()
-    app.contact.modify_first_contact(Contact(first_name="Petr", last_name="Petrov",
+    contact = Contact(first_name="Petr", last_name="Petrov",
                                address="Omsk", mobile_phone="+79231234545", email="petrov@test.ru",
-                               day="11", month="May", year="1997"))
+                               day="11", month="May", year="1997")
+    contact.id_contact = old_contacts[0].id_contact
+    app.contact.modify_first_contact(contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    old_contacts[0] = contact
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
