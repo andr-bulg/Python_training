@@ -58,21 +58,28 @@ class ContactHelper:
         if not (wd.find_elements_by_xpath("//input[@value='Send e-Mail']")):
             wd.find_element_by_link_text("home page").click()
 
-    def delete_first_contact(self):
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contact_cache = None
+
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
-    def modify_first_contact(self, contact_obj):
+    def modify_contact_by_index(self, index, contact_obj):
         wd = self.app.wd
         self.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # Вносим изменения в форму данных для выбранного контакта
         self.data_form_completion(contact_obj)
@@ -80,6 +87,9 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
         self.contact_cache = None
+
+    def modify_first_contact(self, contact_obj):
+        self.modify_contact_by_index(0, contact_obj)
 
     def open_home_page(self):
         wd = self.app.wd

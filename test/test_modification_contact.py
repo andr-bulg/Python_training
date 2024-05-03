@@ -1,4 +1,6 @@
 from model.contact import Contact
+from random import randrange
+
 
 def test_modify_contact_first_name(app):
     """
@@ -84,7 +86,7 @@ def test_modify_contact_date_of_birth(app):
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
 
-def test_modify_first_contact(app):
+def test_modify_some_contact(app):
     """
     Тестовая функция
     :param app: фикстура (объект, который возвращает функция app())
@@ -94,13 +96,14 @@ def test_modify_first_contact(app):
                                     mobile_phone="+79161234565", email="ivanova@test.ru",
                                     day="22", month="July", year="2005"))
     old_contacts = app.contact.get_contact_list()
+    index = randrange(len(old_contacts))
     contact = Contact(first_name="Petr", last_name="Petrov",
                                address="Omsk", mobile_phone="+79231234545", email="petrov@test.ru",
                                day="11", month="May", year="1997")
-    contact.id_contact = old_contacts[0].id_contact
-    app.contact.modify_first_contact(contact)
+    contact.id_contact = old_contacts[index].id_contact
+    app.contact.modify_contact_by_index(index, contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
-    old_contacts[0] = contact
+    old_contacts[index] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
