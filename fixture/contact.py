@@ -108,14 +108,9 @@ class ContactHelper:
             self.open_home_page()
             self.contact_cache = []
             for element in wd.find_elements_by_css_selector("tr[name]"):
-                text = element.text.split()
-                if len(text) == 5:
-                    last_name = text[0]
-                    first_name = text[1]
-                else:
-                    last_name = ''
-                    first_name = ''
                 id_contact = element.find_element_by_name("selected[]").get_attribute("value")
+                first_name = element.find_elements_by_css_selector("td")[2].text
+                last_name = element.find_elements_by_css_selector("td")[1].text
                 self.contact_cache.append(Contact(first_name=first_name, last_name=last_name, id_contact=id_contact))
         return list(self.contact_cache)
 
