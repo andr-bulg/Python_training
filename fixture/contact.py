@@ -74,13 +74,12 @@ class ContactHelper:
 
     def select_first_contact(self):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(0)
 
     def modify_contact_by_index(self, index, contact_obj):
         wd = self.app.wd
         self.open_home_page()
-        self.select_contact_by_index(index)
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         # Вносим изменения в форму данных для выбранного контакта
         self.data_form_completion(contact_obj)
         # Подтверждаем изменение контакта
