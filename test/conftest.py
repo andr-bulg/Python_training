@@ -18,6 +18,13 @@ def app(request):
         if not fixture.is_valid():
             fixture = Application()
 
+    # if fixture is None:
+    #     browser = request.config.getoption("--browser")
+    #     fixture = Application(browser=browser)
+    # else:
+    #     if not fixture.is_valid():
+    #         fixture = Application()
+
     fixture.session.ensure_login(username="admin", password="secret")
     return fixture
 
@@ -34,3 +41,5 @@ def stop(request):
     request.addfinalizer(fin)
     return fixture
 
+# def pytest_addoption(parser):
+#     parser.addoption("--browser", action="store", default="firefox")
