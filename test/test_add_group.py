@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+import pytest
+import random
+import string
 
-def test_add_group(app):
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters + string.digits + string.punctuation + " " * 10
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+
+test_data = [Group(name="", header="", footer="")] + \
+            [Group(name=random_string("name_", 10), header=random_string("header_", 20),
+                   footer=random_string("footer_", 20))
+             for i in range(5)]
+
+@pytest.mark.parametrize("group", test_data, ids=[repr(el) for el in test_data])
+def test_add_group(app, group):
     """
     Тестовая функция
     :param app: фикстура (объект, который возвращает функция app())
+    :param group: тестовые данные
     """
     old_groups = app.group.get_group_list()
-    group = Group(name="test_group_2", header="Group_2", footer="footer2")
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count()
     new_groups = app.group.get_group_list()

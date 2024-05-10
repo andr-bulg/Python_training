@@ -15,7 +15,7 @@ class Group:
         self.id_group = id_group
 
     def __repr__(self):
-        return f"{self.id_group}:{self.name}"
+        return f"{self.id_group}:{self.name}:{self.header}:{self.footer}"
 
     def __eq__(self, other):
         return (self.id_group is None or other.id_group is None or self.id_group == other.id_group) \
