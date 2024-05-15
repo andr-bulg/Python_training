@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-import pytest
-from data.groups import constant as test_data
 
 
-@pytest.mark.parametrize("group", test_data, ids=[repr(el) for el in test_data])
-def test_add_group(app, group):
+def test_add_group(app, data_groups):
     """
     Тестовая функция
     :param app: фикстура (объект, который возвращает функция app())
-    :param group: тестовые данные
+    :param data_groups: тестовые данные
     """
+    group = data_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count()
