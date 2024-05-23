@@ -71,12 +71,23 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id_contact):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(id_contact)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        self.contact_cache = None
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_contact_by_id(self, id_contact):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='{}']".format(id_contact)).click()
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -87,6 +98,16 @@ class ContactHelper:
         # self.open_home_page()
         # wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.open_contact_to_edit_by_index(index)
+        # Вносим изменения в форму данных для выбранного контакта
+        self.data_form_completion(contact_obj)
+        # Подтверждаем изменение контакта
+        wd.find_element_by_name("update").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def modify_contact_by_id(self, id_contact, contact_obj):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_id(id_contact)
         # Вносим изменения в форму данных для выбранного контакта
         self.data_form_completion(contact_obj)
         # Подтверждаем изменение контакта
@@ -125,7 +146,6 @@ class ContactHelper:
                                                   address=address, id_contact=id_contact,
                                                   all_emails_from_home_page=all_emails,
                                                   all_phones_from_home_page=all_phones))
-
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -134,6 +154,11 @@ class ContactHelper:
         row = wd.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
+
+    def open_contact_to_edit_by_id(self, id_contact):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_css_selector("a[href='edit.php?id={}']".format(id_contact)).click()
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd

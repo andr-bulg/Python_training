@@ -27,4 +27,3 @@ class Group:
         else:
             return maxsize
 
-
