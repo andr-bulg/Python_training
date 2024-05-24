@@ -124,5 +124,6 @@ def test_modify_some_contact(app, db, check_ui):
     old_contacts[index] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
     if check_ui:
+        # Проверка информации о контактах на главной странице с информацией, загруженной из базы данных
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
