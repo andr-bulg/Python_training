@@ -13,9 +13,13 @@ def test_modify_contact_first_name(app):
                                    email_1="ivanova_1@test.ru", email_2="ivanova_2@test.ru",
                                    email_3="ivanova_3@test.ru", day="22", month="July", year="2005"))
     old_contacts = app.contact.get_contact_list()
-    app.contact.modify_first_contact(Contact(first_name="Василий"))
+    contact = Contact(first_name="Василий")
+    contact.id_contact = old_contacts[0].id_contact
+    app.contact.modify_first_contact(contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    old_contacts[0] = contact
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 def test_modify_contact_last_name(app):
     """
@@ -32,6 +36,7 @@ def test_modify_contact_last_name(app):
     app.contact.modify_first_contact(Contact(last_name="Николаев"))
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    #assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 def test_modify_contact_address(app):
     """
@@ -48,6 +53,7 @@ def test_modify_contact_address(app):
     app.contact.modify_first_contact(Contact(address="Магнитогорск"))
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    #assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 def test_modify_contact_mobile_phone(app):
     """
@@ -64,6 +70,7 @@ def test_modify_contact_mobile_phone(app):
     app.contact.modify_first_contact(Contact(mobile_phone="+79112223344"))
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    #assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 def test_modify_contact_email(app):
     """
@@ -80,6 +87,7 @@ def test_modify_contact_email(app):
     app.contact.modify_first_contact(Contact(email_1="nikolaev@mail.ru"))
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    #assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 def test_modify_contact_date_of_birth(app):
     """
@@ -96,6 +104,7 @@ def test_modify_contact_date_of_birth(app):
     app.contact.modify_first_contact(Contact(day='17', month="December", year="2000"))
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    #assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 def test_modify_some_contact(app, db, check_ui):
     """
