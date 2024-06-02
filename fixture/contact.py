@@ -195,12 +195,12 @@ class ContactHelper:
 
     def add_first_contact_to_group(self, group_obj):
         wd = self.app.wd
-        self.select_contact_by_index(0)
+        self.open_home_page()
+        self.select_first_contact()
         wd.find_element_by_name("to_group").click()
         Select(wd.find_element_by_name("to_group")).select_by_visible_text(group_obj.name)
         wd.find_element_by_xpath("//div[4]/select/option").click()
         wd.find_element_by_name("add").click()
-        self.open_group_with_contacts(group_obj)
         self.contact_cache = None
 
     def open_group_with_contacts(self, group_obj):
@@ -212,6 +212,7 @@ class ContactHelper:
         self.open_group_with_contacts(group_obj)
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_name("remove").click()
+        self.contact_cache = None
 
 
 

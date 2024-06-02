@@ -53,7 +53,7 @@ def db(request):
     request.addfinalizer(fin)
     return dbfixture
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def orm(request):
     """
     Функция, которая создаёт соединение с базой данных приложения
