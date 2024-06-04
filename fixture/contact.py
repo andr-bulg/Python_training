@@ -212,7 +212,18 @@ class ContactHelper:
         self.open_group_with_contacts(group_obj)
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_name("remove").click()
+        self.return_to_main_page()
         self.contact_cache = None
 
+    def delete_all_contacts_from_group(self, group_obj):
+        wd = self.app.wd
+        self.open_group_with_contacts(group_obj)
+        wd.find_element_by_id("MassCB").click()
+        wd.find_element_by_name("remove").click()
+        self.return_to_main_page()
+        self.contact_cache = None
 
+    def return_to_main_page(self):
+        wd = self.app.wd
+        wd.find_element_by_id("logo").click()
 

@@ -22,12 +22,14 @@ def test_add_contact_to_group(app, db, orm):
                                    email_3="ivanova_3@test.ru", day="22", month="July", year="2005"))
     groups = db.get_group_list()
 
-    result = None
-
     for group in groups:
         if not orm.get_contacts_in_group(group):
             app.contact.add_first_contact_to_group(group)
             result = group
+            assert len(orm.get_contacts_in_group(result)) == 1
             break
-    if result is not None:
-        assert len(orm.get_contacts_in_group(result)) > 0
+    else:
+        app.contact.delete_all_contacts_from_group(groups[0])
+        app.contact.add_first_contact_to_group(groups[0])
+        result = groups[0]
+        assert len(orm.get_contacts_in_group(result)) == 1

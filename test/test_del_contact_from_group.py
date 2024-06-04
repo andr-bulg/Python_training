@@ -36,4 +36,3 @@ def test_delete_contact_from_group(app, db, orm):
     count_contacts_after = len(orm.get_contacts_in_group(some_group))
     assert count_contacts_before - 1 == count_contacts_after
 
-
