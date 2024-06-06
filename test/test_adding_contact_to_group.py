@@ -27,7 +27,6 @@ def test_add_contact_to_group(app, db, orm):
         if not orm.get_contacts_in_group(groups[i]):
             app.contact.add_first_contact_to_group(groups[i], i+1)
             result = groups[i]
-            #assert len(orm.get_contacts_in_group(result)) == 1
             break
     else:
         app.contact.delete_all_contacts_from_group(groups[0])
