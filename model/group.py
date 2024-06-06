@@ -27,3 +27,6 @@ class Group:
         else:
             return maxsize
 
+    def group_name(self):
+        return self.name
+
