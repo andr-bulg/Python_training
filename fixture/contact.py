@@ -193,13 +193,12 @@ class ContactHelper:
         return Contact(home_phone=home_phone, mobile_phone=mobile_phone, work_phone=work_phone)
 
 
-    def add_first_contact_to_group(self, group_obj, n):
+    def add_first_contact_to_group(self, group_obj):
         wd = self.app.wd
         self.open_home_page()
         self.select_first_contact()
         wd.find_element_by_name("to_group").click()
-        Select(wd.find_element_by_name("to_group")).select_by_visible_text(group_obj.name)
-        wd.find_element_by_xpath("//div[4]/select/option[{}]".format(n)).click()
+        Select(wd.find_element_by_name("to_group")).select_by_value(group_obj.id_group)
         wd.find_element_by_name("add").click()
         self.contact_cache = None
 
