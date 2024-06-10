@@ -37,7 +37,9 @@ class ContactHelper:
         wd = self.app.wd
         if text is not None:
             wd.find_element_by_name(field_name).click()
-            Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
+            # первый способ выбора значения из поля со списком через Select
+            # Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
+            # второй способ выбора значения из поля со списком через xpath
             wd.find_element_by_xpath(xpath.format(text)).click()
 
     def change_field_value(self, field_name, text):
