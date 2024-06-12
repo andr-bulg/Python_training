@@ -20,3 +20,4 @@ Scenario: Delete a group
   Given a random group from the list
   When I modify the group from the list
   Then the new group list is equal to the old list without the modified group
+

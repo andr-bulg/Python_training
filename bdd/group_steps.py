@@ -6,7 +6,6 @@ import random
 def group_list(db):
     return db.get_group_list()
 
-
 @given(parsers.parse('a group with {name}, {header} and {footer}'), target_fixture='new_group')
 def new_group(name, header, footer):
     return Group(name=name, header=header, footer=footer)
