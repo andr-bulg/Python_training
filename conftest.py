@@ -18,6 +18,7 @@ def load_config(file):
     """
     global target
     if target is None:
+        # путь относительно файла conftest.py
         # config_file = os.path.abspath(f'../{file}')
         config_file = os.path.abspath(f'{file}')
         with open(config_file) as f:
@@ -102,6 +103,7 @@ def load_from_module(module):
 
 def load_from_json(file):
     # with open(os.path.abspath(f"../data/{file}.json")) as f:
+    # путь относительно рабочей директории (директории запуска тестов)
     with open(os.path.abspath(f"data/{file}.json")) as f:
         return jsonpickle.decode(f.read())
 
