@@ -6,8 +6,8 @@ Scenario Outline: Add new contact
 
   Examples:
   | first_name  | last_name  | address  |
-  | Ivan       | Ivanov     | Moscow   |
-  | Petr       | Petrov     | Omsk     |
+  | Ivan        | Ivanov     | Moscow   |
+  | Petr        | Petrov     | Omsk     |
 
 
 Scenario: Delete a contact

@@ -45,9 +45,10 @@ def verify_group_deleted(app, db, check_ui, non_empty_group_list, random_group):
         new_groups = map(app.group.clean, new_groups)
         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
-@when('I modify the group from the list', target_fixture='modified_group')
-def modified_group(app, random_group):
-    group = Group(name="new_group", header="new_header", footer="new_footer")
+@when(parsers.parse('I modify the group from the list with {name}, {header} and {footer}'),
+      target_fixture='modified_group')
+def modified_group(app, random_group, name, header, footer):
+    group = Group(name=name, header=header, footer=footer)
     group.id_group = random_group.id_group
     app.group.modify_group_by_id(random_group.id_group, group)
     return group
