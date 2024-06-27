@@ -8,12 +8,12 @@ def test_delete_contact_from_group(app, db, orm):
     Тестовая функция
     :param app: фикстура (объект, который возвращает функция app())
     :param db: фикстура работы с бд
-    :param json_contacts: фикстура orm
+    :param orm: фикстура orm
     """
     groups = db.get_group_list()
     contacts = db.get_contact_list()
     if not groups:
-        app.group.create(Group(name="test_group_0", header="Group_0", footer="footer0"))
+        app.group.create(Group(name="test_group_0", header="header_0", footer="footer_0"))
     if not contacts:
         app.contact.create(Contact(first_name="Irina", last_name="Ivanova", address="Kazan",
                                    home_phone="+74961234565", mobile_phone="+79161234565",

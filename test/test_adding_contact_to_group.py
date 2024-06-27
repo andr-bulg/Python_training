@@ -8,11 +8,11 @@ def test_add_contact_to_group(app, db, orm):
     Тестовая функция
     :param app: фикстура (объект, который возвращает функция app())
     :param db: фикстура работы с бд
-    :param json_contacts: фикстура orm
+    :param orm: фикстура orm
     """
 
     if not db.get_group_list():
-        app.group.create(Group(name="test_group_0", header="Group_0", footer="footer0"))
+        app.group.create(Group(name="test_group_0", header="header_0", footer="footer_0"))
 
     if not db.get_contact_list():
         app.contact.create(Contact(first_name="Irina", last_name="Ivanova", address="Kazan",
