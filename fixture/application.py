@@ -4,6 +4,7 @@
 """
 
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
@@ -15,7 +16,9 @@ class Application:
         Инициализация фикстуры
         """
         if browser == "firefox":
-            self.wd = webdriver.Firefox()
+            self.options = Options()
+            self.options.binary_location = r'C:/Program Files/Mozilla Firefox/firefox.exe'
+            self.wd = webdriver.Firefox(executable_path=r'C:/Windows/System32/geckodriver.exe', options=self.options)
         elif browser == "chrome":
             self.wd = webdriver.Chrome()
         elif browser == "ie":
